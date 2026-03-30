@@ -134,16 +134,11 @@
             border: 8px solid var(--red);
             display: flex; align-items: center; justify-content: center;
             background: #2a2a2a;
+            overflow: hidden;
             box-shadow: 0 0 50px rgba(192,57,43,0.3);
             animation: fadeIn 1.2s ease 1s both;
         }
-
-        .hero-initials {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 900;
-            color: rgba(255,255,255,0.6);
-        }
+        .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
         /* SECTION HEADERS */
         .section-label {
@@ -168,7 +163,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* PERFIL */
+        /* PERFIL & INTERESES */
         #perfil {
             background: var(--mid);
             padding: 6rem 2rem;
@@ -176,13 +171,75 @@
         .container { max-width: 1100px; margin: 0 auto; }
         
         .perfil-text {
-            font-size: 1.05rem; /* Reduced as requested */
+            font-size: 1.05rem;
             line-height: 1.8;
             color: var(--accent);
             max-width: 850px;
             font-weight: 300;
+            margin-bottom: 3rem;
         }
-        .perfil-text em { color: var(--red); font-style: normal; font-weight: 500; }
+
+        /* ESTILOS DE INTERESES (PARA QUE NO SE VEA MAL) */
+        .sub-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .sub-section-title::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .interest-card {
+            background: rgba(255,255,255,0.02);
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .interest-card.visible { opacity: 1; transform: translateY(0); }
+        .interest-card:hover {
+            border-color: var(--red);
+            background: rgba(192,57,43,0.06);
+            transform: translateY(-5px);
+        }
+        .interest-card.featured {
+            border: 1px dashed rgba(192,57,43,0.4);
+        }
+        .interest-icon {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 1.2rem;
+            color: var(--red);
+            display: block;
+        }
+        .interest-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .interest-desc {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
 
         /* EXPERIENCIA & EDUCACION */
         section { padding: 6rem 2rem; }
@@ -363,6 +420,10 @@
         footer p { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
         footer strong { color: var(--white); font-size: 1.1rem; }
 
+        /* ANIMATIONS */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         /* RESPONSIVE */
         @media (max-width: 992px) {
             #hero { grid-template-columns: 1fr; }
@@ -370,6 +431,7 @@
             .hero-right { display: none; }
             .item-entry { grid-template-columns: 1fr; gap: 1rem; }
             .skills-layout { grid-template-columns: 1fr; gap: 3rem; }
+            .interests-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -408,7 +470,7 @@
     </div>
     <div class="hero-right">
         <div class="hero-photo-wrap">
-            <img src="ft.jpeg" alt="Alvaro Navarro" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            <img src="ft.jpeg" alt="Alvaro Navarro">
         </div>
     </div>
 </section>
@@ -426,6 +488,7 @@
             Busco aportar eficiencia y soluciones analíticas que generen un impacto positivo en la gestión operativa de la empresa.
         </p>
 
+        <!-- SUBTITULO E INTERESES -->
         <h3 class="sub-section-title">Intereses</h3>
         <div class="interests-grid">
             <div class="interest-card">
@@ -640,7 +703,7 @@
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.item-entry, .skill-item, .vol-card, .tag-row, .edu-highlight').forEach(el => {
+    document.querySelectorAll('.item-entry, .skill-item, .vol-card, .tag-row, .edu-highlight, .interest-card').forEach(el => {
         observer.observe(el);
     });
 </script>
